@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO & Meta Tags -->
+    <title>Clínica Veterinária Orlando Neto | Bernardino de Campos</title>
+    <meta name="description" content="Clínica Veterinária em Bernardino de Campos - SP. Consultas, vacinas, cirurgias e pet shop. Atendimento humanizado pelo Dr. Orlando Neto. Agende pelo WhatsApp!">
+    <meta name="keywords" content="veterinário, bernardino de campos, orlando neto, clínica veterinária, pet shop, consulta animal">
+    
+    <!-- Open Graph / WhatsApp Sharing -->
+    <meta property="og:title" content="Clínica Veterinária Orlando Neto">
+    <meta property="og:description" content="Seu melhor amigo em boas mãos. Consultas, cirurgias e os melhores produtos para seu pet.">
+    <!-- Atualizei a imagem de compartilhamento também -->
+    <meta property="og:image" content="https://images.unsplash.com/photo-1599443015574-be5fe8a05783?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80">
+    <meta property="og:url" content="https://clinicaorlandoneto.com.br">
+    <meta property="og:type" content="website">
+
+    <!-- Favicon (Patinha) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐾</text></svg>">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Configuration for Custom Palette -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'ice': '#F0F4F8',       /* Branco Gelo */
+                        'moss': '#4A5D23',      /* Verde Musgo */
+                        'moss-light': '#6B823A',
+                        'earth': '#5D4037',     /* Marrom */
+                        'sand': '#F5F5DC',      /* Bege */
+                        'sand-dark': '#E8E8C8',
+                    },
+                    fontFamily: {
+                        'sans': ['Poppins', 'sans-serif'],
+                        'display': ['Nunito', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Styles */
+        .hero-pattern {
+            background-color: #F0F4F8;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%234a5d23' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        
+        .blob {
+            position: absolute;
+            filter: blur(40px);
+            z-index: -1;
+            opacity: 0.4;
+        }
+
+        /* Smooth reveal animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Loading Spinner */
+        .loader {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #4A5D23;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* FAQ Accordion Styles */
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .faq-item.active .faq-content {
+            max-height: 200px; /* Adjust based on content */
+        }
+        .faq-icon {
+            transition: transform 0.3s ease;
+        }
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+        
+        /* Gallery Filter Animation */
+        .gallery-item {
+            transition: all 0.3s ease;
+        }
+        .gallery-item.hidden-item {
+            display: none;
+        }
+
+        /* Mobile Menu Transitions */
+        .mobile-drawer {
+            transition: transform 0.3s ease-in-out;
+        }
+        .mobile-overlay {
+            transition: opacity 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-ice text-gray-700 font-sans antialiased overflow-x-hidden">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md shadow-sm transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <div class="w-10 h-10 bg-moss rounded-full flex items-center justify-center text-white text-xl">
+                        <i class="fa-solid fa-paw"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-display font-bold text-xl text-earth leading-none">Orlando Neto</h1>
+                        <span class="text-xs text-moss font-semibold tracking-wider">CLÍNICA VETERINÁRIA</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Menu (Hidden on Mobile) -->
+                <div class="hidden md:flex space-x-6 items-center text-sm font-medium">
+                    <a href="#home" class="text-gray-600 hover:text-moss transition">Início</a>
+                    <a href="#about" class="text-gray-600 hover:text-moss transition">Sobre</a>
+                    <a href="#services" class="text-gray-600 hover:text-moss transition">Serviços</a>
+                    <a href="#gallery" class="text-gray-600 hover:text-moss transition">Galeria</a>
+                    <a href="#blog" class="text-gray-600 hover:text-moss transition">Dicas</a>
+                    <a href="#shop" class="text-gray-600 hover:text-moss transition">Pet Shop</a>
+                    <a href="#ai-assistant" class="text-moss font-bold hover:text-moss-light transition flex items-center gap-1"><i class="fa-solid fa-wand-magic-sparkles"></i> IA</a>
+                    <a href="https://wa.me/5514997973611" target="_blank" class="bg-moss hover:bg-moss-light text-white px-4 py-2 rounded-full font-bold shadow-lg hover:shadow-xl transition transform hover:-translate-y-0.5 flex items-center gap-2">
+                        <i class="fa-brands fa-whatsapp text-lg"></i> Agendar
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button (Only visible on screens < 768px) -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-earth hover:text-moss focus:outline-none p-2">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Side Menu (Mobile Drawer) -->
+    <div id="mobile-menu-overlay" class="fixed inset-0 bg-black/50 z-40 hidden opacity-0 mobile-overlay"></div>
+    <div id="mobile-menu" class="fixed top-0 right-0 h-full w-72 bg-white shadow-2xl z-50 transform translate-x-full mobile-drawer flex flex-col">
+        <div class="p-5 flex justify-between items-center border-b border-gray-100">
+            <h2 class="font-bold text-earth text-lg">Menu</h2>
+            <button id="close-menu-btn" class="text-gray-500 hover:text-moss focus:outline-none">
+                <i class="fa-solid fa-xmark text-2xl"></i>
+            </button>
+        </div>
+        <div class="p-4 space-y-2 overflow-y-auto">
+            <a href="#home" class="block px-4 py-3 text-base font-medium text-earth hover:bg-sand rounded-lg transition"><i class="fa-solid fa-house mr-3 text-moss/70"></i> Início</a>
+            <a href="#about" class="block px-4 py-3 text-base font-medium text-earth hover:bg-sand rounded-lg transition"><i class="fa-solid fa-user-doctor mr-3 text-moss/70"></i> Sobre</a>
+            <a href="#services" class="block px-4 py-3 text-base font-medium text-earth hover:bg-sand rounded-lg transition"><i class="fa-solid fa-stethoscope mr-3 text-moss/70"></i> Serviços</a>
+            <a href="#gallery" class="block px-4 py-3 text-base font-medium text-earth hover:bg-sand rounded-lg transition"><i class="fa-solid fa-images mr-3 text-moss/70"></i> Galeria</a>
+            <a href="#blog" class="block px-4 py-3 text-base font-medium text-earth hover:bg-sand rounded-lg transition"><i class="fa-solid fa-newspaper mr-3 text-moss/70"></i> Dicas</a>
+            <a href="#shop" class="block px-4 py-3 text-base font-medium text-earth hover:bg-sand rounded-lg transition"><i class="fa-solid fa-bag-shopping mr-3 text-moss/70"></i> Pet Shop</a>
+            <a href="#ai-assistant" class="block px-4 py-3 text-base font-bold text-moss hover:bg-sand rounded-lg transition"><i class="fa-solid fa-wand-magic-sparkles mr-3"></i> Assistente IA</a>
+            <div class="pt-4 mt-2 border-t border-gray-100">
+                <a href="https://wa.me/5514997973611" class="block w-full text-center py-3 bg-moss text-white font-bold rounded-xl shadow-md hover:bg-moss-light transition">
+                    <i class="fa-brands fa-whatsapp mr-2"></i> Agendar Agora
+                </a>
+            </div>
+            
+            <div class="pt-6 text-center text-sm text-gray-400">
+                <p>Bernardino de Campos - SP</p>
+                <p>(14) 99797-3611</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative pt-32 pb-20 lg:pt-40 lg:pb-32 overflow-hidden hero-pattern">
+        <!-- Blobs decorativos -->
+        <div class="blob bg-moss/20 w-96 h-96 rounded-full top-0 left-0 mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
+        <div class="blob bg-sand-dark w-96 h-96 rounded-full top-0 right-0 mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="text-center lg:text-left reveal active">
+                    <div class="inline-block px-4 py-1.5 bg-sand text-earth font-semibold rounded-full text-sm mb-6 border border-earth/10">
+                        <i class="fa-solid fa-heart text-moss mr-1"></i> Cuidado especializado com amor
+                    </div>
+                    <h1 class="text-4xl lg:text-6xl font-display font-extrabold text-earth mb-6 leading-tight">
+                        Seu melhor amigo em <span class="text-moss">boas mãos.</span>
+                    </h1>
+                    <p class="text-lg text-gray-600 mb-8 leading-relaxed max-w-lg mx-auto lg:mx-0">
+                        Na Clínica Veterinária Orlando Neto, unimos tecnologia de ponta com o carinho que seu pet merece. Consultas, exames e os melhores produtos em um só lugar.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                        <a href="https://wa.me/5514997973611" class="bg-moss hover:bg-moss-light text-white px-8 py-4 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition transform hover:-translate-y-1 text-center">
+                            Agendar Consulta
+                        </a>
+                        <a href="#services" class="bg-white border-2 border-moss text-moss hover:bg-moss hover:text-white px-8 py-4 rounded-xl font-bold text-lg transition text-center">
+                            Conhecer Serviços
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="relative reveal active delay-200">
+                    <!-- Added bg-gray-200 and fixed height to prevent collapse if image fails -->
+                    <div class="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-gray-200 h-[400px] md:h-[500px]">
+                        <!-- Nova Imagem do Hero (Veterinário) -->
+                        <img src="https://images.unsplash.com/photo-1599443015574-be5fe8a05783?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Veterinário examinando cachorro" class="w-full h-full object-cover">
+                    </div>
+                    <!-- Google Reviews Badge Fixed -->
+                    <div class="absolute -bottom-6 -left-6 bg-white p-4 rounded-2xl shadow-xl hidden md:flex items-center gap-4 animate-bounce-slow border border-gray-100 z-10">
+                        <div class="bg-white p-2 rounded-full border border-gray-100">
+                            <!-- Usando FontAwesome para garantir que o logo sempre apareça -->
+                            <i class="fa-brands fa-google text-2xl text-blue-500"></i>
+                        </div>
+                        <div>
+                            <div class="flex text-yellow-400 text-xs mb-1">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            </div>
+                            <p class="font-bold text-earth text-sm">4.9/5.0</p>
+                            <p class="text-[10px] text-gray-500">Avaliações Positivas</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews / Social Proof Section -->
+    <section class="py-12 bg-white border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-10 reveal">
+                <h3 class="text-earth font-bold text-lg">O que dizem sobre nós no Google</h3>
+                <div class="flex justify-center gap-1 text-yellow-400 my-2 text-xl">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                </div>
+                <p class="text-xs text-gray-400 mt-2">Classificação 4.9 baseada em avaliações reais</p>
+            </div>
+            
+            <div id="reviews-container" class="grid md:grid-cols-3 gap-6 reveal">
+                <div class="col-span-3 text-center py-10">
+                    <div class="loader mx-auto mb-4"></div>
+                    <p class="text-gray-400 text-sm">Carregando avaliações...</p>
+                </div>
+            </div>
+
+            <div class="text-center mt-8">
+                <!-- Link do Google Maps Atualizado -->
+                <a href="https://www.google.com/maps/place/Cl%C3%ADnica+Veterin%C3%A1ria+Orlando+Neto/data=!4m2!3m1!1s0x0:0xcc199afc5eee1cf3?sa=X&ved=1t:2428&hl=pt_BR&ictx=111" target="_blank" class="text-sm font-bold text-moss hover:underline">Ver todas as avaliações no Google Maps <i class="fa-solid fa-external-link-alt ml-1"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-ice">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div class="relative order-2 md:order-1 reveal">
+                    <div class="absolute inset-0 bg-sand rounded-3xl transform rotate-3 scale-105 -z-10"></div>
+                    <img src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Dr. Orlando Neto" class="rounded-3xl shadow-lg w-full object-cover h-96">
+                </div>
+                <div class="order-1 md:order-2 reveal">
+                    <h4 class="text-moss font-bold tracking-wider uppercase text-sm mb-2">Sobre Nós</h4>
+                    <h2 class="text-3xl md:text-4xl font-display font-bold text-earth mb-6">Conheça o Dr. Orlando Neto</h2>
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        Fundada com o propósito de elevar o padrão de atendimento veterinário, nossa clínica carrega o nome de seu fundador, Dr. Orlando. Com mais de 15 anos de experiência em medicina veterinária de pequenos animais, ele lidera uma equipe apaixonada.
+                    </p>
+                    <p class="text-gray-600 mb-8 leading-relaxed">
+                        Acreditamos que cada animal é um membro da família. Por isso, investimos em equipamentos modernos e um ambiente acolhedor (cor de areia e verde musgo) para que seu pet se sinta em casa, não em um hospital.
+                    </p>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-white p-4 rounded-xl border border-gray-200">
+                            <h3 class="font-bold text-earth text-2xl mb-1">15+</h3>
+                            <p class="text-sm text-gray-500">Anos de Experiência</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-xl border border-gray-200">
+                            <h3 class="font-bold text-earth text-2xl mb-1">10k+</h3>
+                            <p class="text-sm text-gray-500">Pets Atendidos</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20 bg-sand/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                <h4 class="text-moss font-bold tracking-wider uppercase text-sm mb-2">Nossos Serviços</h4>
+                <h2 class="text-3xl md:text-4xl font-display font-bold text-earth">Tudo o que seu pet precisa</h2>
+                <p class="text-gray-600 mt-4">Oferecemos um ecossistema completo de saúde e bem-estar para cães, gatos e animais exóticos.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Services Cards -->
+                <div class="bg-white p-8 rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 group reveal">
+                    <div class="w-14 h-14 bg-ice rounded-2xl flex items-center justify-center text-moss text-2xl mb-6 group-hover:bg-moss group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-stethoscope"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-earth mb-3">Consultas Clínicas</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-4">Check-ups de rotina, vacinação e diagnóstico preciso com nossa equipe de especialistas.</p>
+                    <a href="https://wa.me/5514997973611" class="text-moss font-bold text-sm hover:underline">Agendar <i class="fa-solid fa-arrow-right ml-1"></i></a>
+                </div>
+
+                <div class="bg-white p-8 rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 group reveal">
+                    <div class="w-14 h-14 bg-ice rounded-2xl flex items-center justify-center text-moss text-2xl mb-6 group-hover:bg-moss group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-syringe"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-earth mb-3">Vacinação e Exames</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-4">Mantenha a carteirinha em dia. Realizamos exames de sangue e imagem no local.</p>
+                    <a href="https://wa.me/5514997973611" class="text-moss font-bold text-sm hover:underline">Saiba mais <i class="fa-solid fa-arrow-right ml-1"></i></a>
+                </div>
+
+                <div class="bg-white p-8 rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 group reveal">
+                    <div class="w-14 h-14 bg-ice rounded-2xl flex items-center justify-center text-moss text-2xl mb-6 group-hover:bg-moss group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-tooth"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-earth mb-3">Odontologia</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-4">Limpeza de tártaro e tratamentos dentários para garantir o sorriso do seu pet.</p>
+                    <a href="https://wa.me/5514997973611" class="text-moss font-bold text-sm hover:underline">Agendar <i class="fa-solid fa-arrow-right ml-1"></i></a>
+                </div>
+
+                <div class="bg-white p-8 rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 group reveal">
+                    <div class="w-14 h-14 bg-ice rounded-2xl flex items-center justify-center text-moss text-2xl mb-6 group-hover:bg-moss group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-microscope"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-earth mb-3">Cirurgia Geral</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-4">Centro cirúrgico equipado para castrações e procedimentos de tecidos moles.</p>
+                    <a href="https://wa.me/5514997973611" class="text-moss font-bold text-sm hover:underline">Consultar <i class="fa-solid fa-arrow-right ml-1"></i></a>
+                </div>
+
+                <div class="bg-moss p-8 rounded-3xl shadow-lg flex flex-col justify-center items-center text-center reveal">
+                    <h3 class="text-xl font-bold text-white mb-3">Precisa de algo mais?</h3>
+                    <p class="text-green-100 text-sm leading-relaxed mb-6">Entre em contato para saber sobre especialidades como Dermatologia e Oftalmologia.</p>
+                    <a href="https://wa.me/5514997973611" class="bg-sand text-earth font-bold px-6 py-2 rounded-full hover:bg-white transition shadow-md w-full">Falar no WhatsApp</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12 reveal">
+                <div class="max-w-2xl">
+                    <h4 class="text-moss font-bold tracking-wider uppercase text-sm mb-2">Galeria</h4>
+                    <h2 class="text-3xl md:text-4xl font-display font-bold text-earth">Por dentro da Clínica</h2>
+                    <p class="text-gray-600 mt-2">Acompanhe nosso dia a dia, pacientes felizes e nossa estrutura.</p>
+                </div>
+                <!-- Functional Filter Tabs -->
+                <div class="flex gap-2 mt-4 md:mt-0">
+                    <button onclick="filterGallery('all', this)" class="filter-btn px-4 py-2 bg-moss text-white rounded-full text-sm font-bold cursor-pointer transition shadow-md">Todos</button>
+                    <button onclick="filterGallery('patients', this)" class="filter-btn px-4 py-2 bg-ice text-gray-600 hover:bg-gray-200 rounded-full text-sm font-bold cursor-pointer transition">Pacientes</button>
+                    <button onclick="filterGallery('surgery', this)" class="filter-btn px-4 py-2 bg-ice text-gray-600 hover:bg-gray-200 rounded-full text-sm font-bold cursor-pointer transition">Cirurgias</button>
+                </div>
+            </div>
+
+            <!-- Gallery Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:h-[500px] auto-rows-fr reveal" id="gallery-grid">
+                <!-- Large item (Featured/Structure) -->
+                <div class="gallery-item col-span-2 row-span-2 rounded-2xl overflow-hidden relative group" data-category="structure">
+                    <img src="https://images.unsplash.com/photo-1606425271394-c3ca9aa1fc06?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Consultório" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-6">
+                        <span class="text-white font-bold">Atendimento Humanizado</span>
+                    </div>
+                </div>
+                <!-- Small items -->
+                <div class="gallery-item col-span-1 row-span-1 rounded-2xl overflow-hidden relative group" data-category="patients">
+                    <img src="https://images.unsplash.com/photo-1543852786-1cf6624b9987?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Gato" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+                </div>
+                <div class="gallery-item col-span-1 row-span-1 rounded-2xl overflow-hidden relative group" data-category="surgery">
+                    <img src="https://images.unsplash.com/photo-1576201836106-db1758fd1c97?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Cirurgia" class="w-full h-full object-cover transition duration-500 group-hover:scale-110 filter grayscale hover:grayscale-0">
+                    <div class="absolute inset-0 bg-black/50 flex items-center justify-center group-hover:bg-transparent transition">
+                        <span class="text-white text-xs font-bold bg-earth/80 px-2 py-1 rounded opacity-100 group-hover:opacity-0 transition">Área Cirúrgica</span>
+                    </div>
+                </div>
+                <div class="gallery-item col-span-1 row-span-1 rounded-2xl overflow-hidden relative group" data-category="patients">
+                    <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Gato 2" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+                </div>
+                <div class="gallery-item col-span-1 row-span-1 rounded-2xl overflow-hidden relative group" data-category="patients">
+                    <img src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Cachorro Feliz" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+                </div>
+            </div>
+             <div class="text-center mt-6">
+                <p class="text-sm text-gray-500">Siga nosso Instagram para ver casos diários e resultados de operações: <a href="https://www.instagram.com/clinica.vet.on/" target="_blank" class="text-moss font-bold hover:underline">@clinica.vet.on</a></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Shop Section -->
+    <section id="shop" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12 reveal">
+                <div class="max-w-2xl">
+                    <h4 class="text-moss font-bold tracking-wider uppercase text-sm mb-2">Nossa Loja</h4>
+                    <h2 class="text-3xl md:text-4xl font-display font-bold text-earth">Produtos Selecionados</h2>
+                    <p class="text-gray-600 mt-2">Os melhores alimentos e acessórios, aprovados pelo Dr. Orlando Neto.</p>
+                </div>
+                <a href="https://wa.me/5514997973611" class="hidden md:inline-flex items-center text-earth font-bold hover:text-moss transition mt-4 md:mt-0">
+                    Ver catálogo completo <i class="fa-solid fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Products -->
+                <div class="group relative rounded-2xl overflow-hidden border border-gray-100 reveal">
+                    <div class="aspect-square overflow-hidden bg-ice">
+                        <img src="https://images.unsplash.com/photo-1568640347023-a616a30bc3bd?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Ração Premium" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                    </div>
+                    <div class="p-4 bg-white">
+                        <span class="text-xs font-bold text-moss bg-moss/10 px-2 py-1 rounded">Nutrição</span>
+                        <h3 class="font-bold text-earth mt-2 text-lg">Rações Premium</h3>
+                        <p class="text-sm text-gray-500 mt-1">Marcas líderes de mercado</p>
+                        <a href="https://wa.me/5514997973611?text=Olá, gostaria de saber sobre rações." class="mt-4 block w-full py-2 bg-earth text-white text-center rounded-lg text-sm font-semibold hover:bg-moss transition">Pedir Cotação</a>
+                    </div>
+                </div>
+                 <div class="group relative rounded-2xl overflow-hidden border border-gray-100 reveal">
+                    <div class="aspect-square overflow-hidden bg-ice">
+                        <!-- Nova Imagem para Higiene (Cão no banho/produtos) -->
+                        <img src="https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Higiene e Banho" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                    </div>
+                    <div class="p-4 bg-white">
+                        <span class="text-xs font-bold text-moss bg-moss/10 px-2 py-1 rounded">Higiene</span>
+                        <h3 class="font-bold text-earth mt-2 text-lg">Shampoos e Perfumes</h3>
+                        <p class="text-sm text-gray-500 mt-1">O cheirinho do banho em casa</p>
+                        <a href="https://wa.me/5514997973611?text=Olá, preciso de produtos de higiene." class="mt-4 block w-full py-2 bg-earth text-white text-center rounded-lg text-sm font-semibold hover:bg-moss transition">Comprar</a>
+                    </div>
+                </div>
+            </div>
+             <div class="mt-8 text-center md:hidden">
+                <a href="https://wa.me/5514997973611" class="inline-flex items-center text-earth font-bold hover:text-moss transition">
+                    Ver catálogo completo <i class="fa-solid fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-20 bg-sand/30">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-10 reveal">
+                <h2 class="text-2xl md:text-3xl font-display font-bold text-earth">Perguntas Frequentes</h2>
+            </div>
+            <div class="space-y-4 reveal">
+                <div class="faq-item bg-white rounded-xl shadow-sm cursor-pointer" onclick="toggleFaq(this)">
+                    <div class="p-5 flex justify-between items-center">
+                        <h3 class="font-bold text-earth">Vocês aceitam planos de saúde pet?</h3>
+                        <i class="fa-solid fa-chevron-down faq-icon text-moss"></i>
+                    </div>
+                    <div class="faq-content bg-ice/30">
+                        <p class="p-5 text-gray-600 text-sm">Sim, aceitamos os principais planos do mercado. Por favor, entre em contato pelo WhatsApp para confirmar se o seu plano cobre o procedimento desejado.</p>
+                    </div>
+                </div>
+                 <div class="faq-item bg-white rounded-xl shadow-sm cursor-pointer" onclick="toggleFaq(this)">
+                    <div class="p-5 flex justify-between items-center">
+                        <h3 class="font-bold text-earth">Quais formas de pagamento aceitam?</h3>
+                        <i class="fa-solid fa-chevron-down faq-icon text-moss"></i>
+                    </div>
+                    <div class="faq-content bg-ice/30">
+                        <p class="p-5 text-gray-600 text-sm">Aceitamos cartões de crédito, débito, PIX e dinheiro. Parcelamos procedimentos de maior valor, consulte condições na recepção.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map / Location Section -->
+    <section class="bg-white border-t border-gray-200">
+        <!-- Mapa Atualizado -->
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3680.123456789012!2d-49.4716!3d-23.0135!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zAv. Albino Alves García, 361, Bernardino de Campos - SP!5e0!3m2!1spt-BR!2sbr!4v1689620000000!5m2!1spt-BR!2sbr" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="grayscale hover:grayscale-0 transition duration-700"></iframe>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-earth text-sand pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                <!-- Column 1: Brand -->
+                <div>
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="w-8 h-8 bg-moss rounded-full flex items-center justify-center text-white">
+                            <i class="fa-solid fa-paw text-sm"></i>
+                        </div>
+                        <h2 class="font-display font-bold text-xl text-white">Orlando Neto</h2>
+                    </div>
+                    <p class="text-sand/70 text-sm leading-relaxed mb-6">
+                        Cuidando da saúde e felicidade do seu pet com amor, profissionalismo e a melhor estrutura da região.
+                    </p>
+                    <div class="flex space-x-3">
+                        <a href="https://www.instagram.com/clinica.vet.on/" target="_blank" class="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center hover:bg-moss transition text-white" title="Instagram Clínica">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+                        <a href="https://www.instagram.com/orlando.neto.92/" target="_blank" class="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center hover:bg-moss transition text-white" title="Instagram Dr. Orlando">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+                        <a href="https://www.facebook.com/EspOrlandoNetoo" target="_blank" class="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center hover:bg-moss transition text-white" title="Facebook">
+                            <i class="fa-brands fa-facebook-f"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Column 2: Links -->
+                <div>
+                    <h3 class="font-bold text-white mb-6 text-lg">Links Rápidos</h3>
+                    <ul class="space-y-3 text-sm text-sand/70">
+                        <li><a href="#home" class="hover:text-white transition">Início</a></li>
+                        <li><a href="#about" class="hover:text-white transition">Sobre a Clínica</a></li>
+                        <li><a href="#services" class="hover:text-white transition">Nossos Serviços</a></li>
+                        <li><a href="#gallery" class="hover:text-white transition">Galeria</a></li>
+                        <li><a href="#shop" class="hover:text-white transition">Pet Shop</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3: Contact -->
+                <div>
+                    <h3 class="font-bold text-white mb-6 text-lg">Contato</h3>
+                    <ul class="space-y-4 text-sm text-sand/70">
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-location-dot mt-1 text-moss min-w-[16px]"></i>
+                            <span>Av. Albino Alves García, 361<br>Centro - Bernardino de Campos/SP<br>CEP: 18960-000</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-brands fa-whatsapp text-moss text-lg min-w-[16px]"></i>
+                            <span>(14) 99797-3611</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Column 4: Hours -->
+                <div>
+                    <h3 class="font-bold text-white mb-6 text-lg">Horário</h3>
+                    <ul class="space-y-2 text-sm text-sand/70">
+                        <li class="flex justify-between border-b border-white/10 pb-2">
+                            <span>Seg - Sex</span>
+                            <span class="text-white">08:30 - 18:00</span>
+                        </li>
+                        <li class="flex justify-between border-b border-white/10 pb-2">
+                            <span>Sábado</span>
+                            <span class="text-white">08:30 - 13:00</span>
+                        </li>
+                        <li class="flex justify-between pt-2">
+                            <span>Domingo</span>
+                            <span class="text-moss font-bold">Fechado</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-white/10 pt-8 text-center text-xs text-sand/50">
+                <p>&copy; 2023 Clínica Veterinária Orlando Neto. Todos os direitos reservados.</p>
+                <p class="mt-2">Desenvolvido por <span class="font-bold text-moss hover:text-white transition cursor-pointer">Convert</span></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="fixed bottom-24 right-6 bg-earth text-white w-12 h-12 rounded-full shadow-lg items-center justify-center hidden hover:bg-moss transition z-40">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/5514997973611" target="_blank" class="fixed bottom-6 right-6 z-50 bg-[#25D366] hover:bg-[#20ba5a] text-white w-16 h-16 rounded-full flex items-center justify-center shadow-2xl transition transform hover:scale-110 animate-bounce-slow">
+        <i class="fa-brands fa-whatsapp text-3xl"></i>
+    </a>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile Side Menu Logic
+        const btn = document.getElementById('mobile-menu-btn');
+        const closeBtn = document.getElementById('close-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        const overlay = document.getElementById('mobile-menu-overlay');
+
+        function toggleMenu() {
+            const isClosed = menu.classList.contains('translate-x-full');
+            if (isClosed) {
+                // Open
+                overlay.classList.remove('hidden');
+                setTimeout(() => overlay.classList.remove('opacity-0'), 10);
+                menu.classList.remove('translate-x-full');
+            } else {
+                // Close
+                menu.classList.add('translate-x-full');
+                overlay.classList.add('opacity-0');
+                setTimeout(() => overlay.classList.add('hidden'), 300);
+            }
+        }
+
+        btn.addEventListener('click', toggleMenu);
+        closeBtn.addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', toggleMenu);
+        
+        // Close on link click
+        menu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', toggleMenu);
+        });
+
+        // Navbar Scroll Effect & Back to Top
+        const navbar = document.getElementById('navbar');
+        const backToTopBtn = document.getElementById('back-to-top');
+        
+        window.addEventListener('scroll', () => {
+            // Navbar
+            if (window.scrollY > 10) {
+                navbar.classList.add('shadow-md');
+                navbar.classList.replace('h-20', 'h-16');
+            } else {
+                navbar.classList.remove('shadow-md');
+                navbar.classList.replace('h-16', 'h-20');
+            }
+
+            // Back to Top
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.remove('hidden');
+                backToTopBtn.classList.add('flex');
+            } else {
+                backToTopBtn.classList.add('hidden');
+                backToTopBtn.classList.remove('flex');
+            }
+        });
+
+        // Scroll to Top Action
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // FAQ Toggle Logic
+        function toggleFaq(element) {
+            element.classList.toggle('active');
+        }
+        
+        // Gallery Filter Logic
+        function filterGallery(category, btn) {
+            const items = document.querySelectorAll('.gallery-item');
+            const buttons = document.querySelectorAll('.filter-btn');
+            
+            // Update buttons active state
+            buttons.forEach(button => {
+                button.classList.remove('bg-moss', 'text-white', 'shadow-md');
+                button.classList.add('bg-ice', 'text-gray-600', 'hover:bg-gray-200');
+            });
+            btn.classList.remove('bg-ice', 'text-gray-600', 'hover:bg-gray-200');
+            btn.classList.add('bg-moss', 'text-white', 'shadow-md');
+
+            // Filter items
+            items.forEach(item => {
+                const itemCategory = item.getAttribute('data-category');
+                
+                if (category === 'all' || itemCategory === category) {
+                    item.classList.remove('hidden-item');
+                    item.style.opacity = '0';
+                    setTimeout(() => item.style.opacity = '1', 50);
+                } else {
+                    item.classList.add('hidden-item');
+                }
+            });
+        }
+
+        // Simple Scroll Reveal Animation
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        // Trigger once on load
+        reveal();
+
+        // --- GEMINI AI INTEGRATION ---
+        
+        // Tab Switching Logic
+        function switchTab(tab) {
+            const contentNames = document.getElementById('content-names');
+            const contentAsk = document.getElementById('content-ask');
+            const tabNames = document.getElementById('tab-names');
+            const tabAsk = document.getElementById('tab-ask');
+
+            if (tab === 'names') {
+                contentNames.classList.remove('hidden');
+                contentAsk.classList.add('hidden');
+                
+                tabNames.classList.add('text-earth', 'bg-sand/30', 'border-moss');
+                tabNames.classList.remove('text-gray-500', 'border-transparent');
+                
+                tabAsk.classList.remove('text-earth', 'bg-sand/30', 'border-moss');
+                tabAsk.classList.add('text-gray-500', 'border-transparent');
+            } else {
+                contentNames.classList.add('hidden');
+                contentAsk.classList.remove('hidden');
+                
+                tabAsk.classList.add('text-earth', 'bg-sand/30', 'border-moss');
+                tabAsk.classList.remove('text-gray-500', 'border-transparent');
+                
+                tabNames.classList.remove('text-earth', 'bg-sand/30', 'border-moss');
+                tabNames.classList.add('text-gray-500', 'border-transparent');
+            }
+        }
+
+        // Gemini API Helper
+        const apiKey = ""; // Provided by system at runtime
+        
+        async function callGemini(promptText) {
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            
+            const payload = {
+                contents: [{
+                    parts: [{ text: promptText }]
+                }]
+            };
+
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) throw new Error(`API Error: ${response.statusText}`);
+                
+                const data = await response.json();
+                return data.candidates[0].content.parts[0].text;
+            } catch (error) {
+                console.error("Gemini API Error:", error);
+                return "Desculpe, tive um problema ao conectar com a IA. Tente novamente!";
+            }
+        }
+
+        // Feature 1: Generate Names
+        async function generateNames() {
+            const type = document.getElementById('pet-type').value;
+            const traits = document.getElementById('pet-traits').value;
+            const btnText = document.getElementById('btn-names-text');
+            const loader = document.getElementById('loader-names');
+            const resultDiv = document.getElementById('result-names');
+
+            if (!traits.trim()) {
+                alert("Por favor, digite algumas características (ex: cor, personalidade).");
+                return;
+            }
+
+            // Loading state
+            btnText.classList.add('hidden');
+            loader.classList.remove('hidden');
+            
+            const prompt = `Gere uma lista de 5 nomes criativos, fofos e modernos para um ${type} com as seguintes características: ${traits}. Apenas liste os nomes com uma breve explicação de 3 palavras para cada. Responda em Português do Brasil.`;
+            
+            const result = await callGemini(prompt);
+            
+            // Format result (replace newlines with <br>)
+            const formattedResult = result.replace(/\n/g, '<br>').replace(/\*\*/g, '');
+
+            resultDiv.innerHTML = `<div class="text-left text-gray-700 space-y-2">${formattedResult}</div>`;
+            
+            // Restore state
+            btnText.classList.remove('hidden');
+            loader.classList.add('hidden');
+        }
+
+        // Feature 2: Ask Question
+        async function askAI() {
+            const question = document.getElementById('ask-input').value;
+            const btnText = document.getElementById('btn-ask-text');
+            const loader = document.getElementById('loader-ask');
+            const resultDiv = document.getElementById('result-ask');
+
+            if (!question.trim()) {
+                alert("Por favor, digite uma pergunta.");
+                return;
+            }
+
+            // Loading state
+            btnText.classList.add('hidden');
+            loader.classList.remove('hidden');
+
+            const prompt = `Você é um assistente virtual da Clínica Veterinária Orlando Neto. O usuário perguntou: "${question}". Responda de forma curta, amigável e educativa em Português. IMPORTANTE: Se a pergunta sugerir doença ou emergência, você DEVE dizer que não pode diagnosticar e recomendar que agendem uma consulta com o Dr. Orlando. Não use negrito (markdown). Mantenha a resposta com no máximo 3 frases.`;
+
+            const result = await callGemini(prompt);
+
+            resultDiv.innerHTML = `<p>${result}</p><p class="mt-4 text-xs text-gray-400 border-t border-gray-100 pt-2">Resposta gerada por Inteligência Artificial (Gemini).</p>`;
+            
+            // Restore state
+            btnText.classList.remove('hidden');
+            loader.classList.add('hidden');
+        }
+
+        // --- GOOGLE REVIEWS INTEGRATION (MOCKUP) ---
+        // Em um site real com backend, você substituiria esta constante por uma chamada: fetch('/api/google-reviews')
+        const googleReviewsData = [
+            {
+                name: "Mariana Silva",
+                initial: "M",
+                color: "bg-moss",
+                text: "O Dr. Orlando Neto é fantástico! Salvou meu gato em uma emergência de madrugada. Atendimento impecável e estrutura moderna.",
+                time: "Há 2 semanas",
+                stars: 5
+            },
+            {
+                name: "Roberto Carlos",
+                initial: "R",
+                color: "bg-earth",
+                text: "Levo meus três cachorros lá. O atendimento veterinário é ótimo e os preços são justos. Recomendo de olhos fechados!",
+                time: "Há 1 mês",
+                stars: 5
+            },
+            {
+                name: "Ana Clara",
+                initial: "A",
+                color: "bg-moss-light",
+                text: "Clínica muito limpa e organizada. Fizemos uma cirurgia ortopédica e a recuperação foi excelente.",
+                time: "Há 3 dias",
+                stars: 5
+            },
+            {
+                name: "Carlos Eduardo",
+                initial: "C",
+                color: "bg-blue-500",
+                text: "Melhor veterinário da região. Muito atencioso com os animais e explica tudo detalhadamente para os donos.",
+                time: "Há 2 meses",
+                stars: 5
+            },
+            {
+                name: "Fernanda Lima",
+                initial: "F",
+                color: "bg-purple-500",
+                text: "Amei o atendimento da recepção e o carinho com minha Mel. A lojinha tem produtos ótimos também.",
+                time: "Há 3 semanas",
+                stars: 4
+            },
+            {
+                name: "Pedro Santos",
+                initial: "P",
+                color: "bg-orange-500",
+                text: "Estrutura de primeiro mundo. O Dr. Orlando é nota 10.",
+                time: "Há 5 dias",
+                stars: 5
+            }
+        ];
+
+        function loadReviews() {
+            const container = document.getElementById('reviews-container');
+            
+            // Simular um tempo de carregamento de rede (apenas para efeito visual)
+            setTimeout(() => {
+                container.innerHTML = ''; // Limpar loader
+                
+                // Pegar apenas as 3 primeiras avaliações (ou fazer um carrossel futuramente)
+                const recentReviews = googleReviewsData.slice(0, 3); 
+
+                recentReviews.forEach(review => {
+                    const starsHtml = Array(review.stars).fill('<i class="fa-solid fa-star text-yellow-400 text-xs"></i>').join('');
+                    
+                    const cardHtml = `
+                        <div class="bg-ice p-6 rounded-2xl relative hover:shadow-md transition duration-300">
+                            <i class="fa-solid fa-quote-left text-4xl text-moss/10 absolute top-4 right-4"></i>
+                            <div class="mb-3">${starsHtml}</div>
+                            <p class="text-gray-600 text-sm italic mb-4 h-20 overflow-hidden">"${review.text}"</p>
+                            <div class="flex items-center gap-3 mt-auto">
+                                <div class="w-10 h-10 ${review.color} rounded-full flex items-center justify-center text-white font-bold shadow-sm">${review.initial}</div>
+                                <div>
+                                    <p class="font-bold text-earth text-sm">${review.name}</p>
+                                    <p class="text-xs text-gray-500">${review.time}</p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    container.innerHTML += cardHtml;
+                });
+            }, 800); // 800ms de delay simulado
+        }
+
+        // Iniciar carregamento das reviews
+        loadReviews();
+
+    </script>
+</body>
+</html>
